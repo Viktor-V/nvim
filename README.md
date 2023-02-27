@@ -9,7 +9,7 @@ This is my AstroNvim installation script
 ## Installation
 
 ```
-./instal.sh
+./install.sh
 ```
 
 ## Requirements
