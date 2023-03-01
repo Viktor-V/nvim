@@ -36,4 +36,5 @@ if [ ! -d ~/.config/nvim/lua/user ]; then
   cp -r ./init.lua ~/.config/nvim/lua/user/init.lua
 fi
 
-nvim --headless -c "autocmd User PackerComplete quitall"
+nvim --headless -c  'autocmd User PackerComplete qall' -c 'sleep 100' -c 'silent PackerSync' -c 'sleep 100' -c 'qall'
+nvim --headless -c 'TSInstall bash css dockerfile go graphql html javascript json lua markdown php phpdoc scss tsx twig typescript vue yaml' -c 'sleep 30' -c 'qall'
