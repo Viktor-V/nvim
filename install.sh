@@ -7,7 +7,7 @@ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
 sudo apt-get update
-sudo apt-get install zip git lua5.4 python3 golang-go gdu ripgrep php8.2 nodejs yarn -y
+sudo apt-get install zip git lua5.4 luarocks python3 python3.10-venv golang-go gdu ripgrep php8.2 nodejs yarn -y
 
 # Istall composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -39,16 +39,20 @@ sudo mv /tmp/win32yank.exe /usr/local/bin/
 
 # Copy AstroNvim config
 if [ ! -d ~/.config/nvim ]; then
-  git clone -b v2.11.8 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+    git clone -b v2.11.8 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
 fi
 
 # Copy custom config
 if [ ! -d ~/.config/nvim/lua/user ]; then
-  mkdir ~/.config/nvim/lua/user
-  cp -r ./init.lua ~/.config/nvim/lua/user/init.lua
+    mkdir ~/.config/nvim/lua/user
+    cp -r ./init.lua ~/.config/nvim/lua/user/init.lua
 fi
 
 # First run
-nvim --headless -c  'autocmd User PackerComplete qall' -c 'sleep 30' -c 'silent PackerSync' -c 'sleep 30' -c 'qall'
-nvim --headless -c 'TSUninstall bash css dockerfile go graphql html javascript json lua markdown php phpdoc scss tsx twig typescript vue yaml' -c 'sleep 30' -c 'qall'
-nvim --headless -c 'TSInstall bash css dockerfile go graphql html javascript json lua markdown php phpdoc scss tsx twig typescript vue yaml' -c 'sleep 30' -c 'qall'
+nvim --headless +'autocmd User PackerComplete sleep 100ms | qa' +'silent PackerSync' +'qa'
+
+nvim --headless +'silent TSUninstall bash css dockerfile go graphql html javascript json lua markdown php phpdoc scss tsx twig typescript vue yaml' +'sleep 15' +'qa'
+nvim --headless +'silent TSInstall bash css dockerfile go graphql html javascript json lua markdown php phpdoc scss tsx twig typescript vue yaml' +'sleep 15' +'qa'
+
+nvim --headless +'MasonUninstallAll' +'sleep 15' +'qa'
+nvim --headless +'MasonInstall phpactor phpstan php-cs-fixer typescript-language-server eslint_d prettier bash-language-server shellcheck beautysh css-lsp dockerfile-language-server emmet-ls html-lsp erb-lint json-lsp jsonlint lua-language-server luacheck stylua markdownlint sqlls twigcs lemminx xmlformatter yaml-language-server yamllint' +'sleep 30' +'qa'
